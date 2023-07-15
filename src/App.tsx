@@ -11,10 +11,32 @@ const client = createPromiseClient(ElizaService, transport);
 
 function App() {
   const [inputValue, setInputValue] = useState("");
+  const [messages, setMessages] = useState<{
+    fromMe: boolean;
+    message: string;
+  }[]>([]);
+
   return <>
+    <ol>
+      {messages.map((message, index) => <li key={index}>{`${message.fromMe ? "ME:" : "ELIZA:"} ${message.message}`} </li>)}
+    </ol>
     <form onSubmit={async (e) => {
       e.preventDefault();
-      await client.say({ sentense: inputValue })
+      setInputValue("");
+      setMessages((prev) => [...prev,
+      {
+        fromMe: true,
+        message: inputValue
+      }
+      ])
+      const response = await client.say({ sentense: inputValue })
+      console.log(response.sentence)
+      setMessages((prev) => [...prev,
+      {
+        fromMe: false,
+        message: response.sentence
+      }
+      ])
     }}>
       <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
       <button type="submit">Send</button>
