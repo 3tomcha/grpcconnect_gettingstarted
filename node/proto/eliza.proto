@@ -1,0 +1,14 @@
+syntax = "proto3";
+package buf.connect.demo.eliza.v1;
+
+message SayRequest {
+  string sentence = 1;
+}
+
+message SayResponse {
+  string sentence = 1;
+}
+
+service Eliza {
+  rpc Say(SayRequest) returns (SayResponse) {}
+}
