@@ -7,7 +7,7 @@ export default (router: ConnectRouter) =>
     // implements rpc Say
     async say(req) {
       return {
-        sentence: `You said: ${req.sentence}`
+        sentence: `You: ${req.sentence}`
       }
     },
   });
